@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>百川計畫 — 免費幫公益組織做網站</title>
+  <meta name="description" content="百川計畫是台灣超讚指南的延伸行動，免費幫 100 個還在做事的 NGO 和公益組織做一個漂亮的 one-page 網站。">
+  <meta property="og:title" content="百川計畫 — 免費幫公益組織做網站">
+  <meta property="og:description" content="幫 100 個沒網站、沒資源、但還在做事的公益組織，免費做一個漂亮的網站。">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #2D7D6B;
+      --accent-dark: #246B5B;
+      --warm: #C4956A;
+      --bg: #F7F3EE;
+      --surface: #FFFFFF;
+      --text: #1C1917;
+      --text-secondary: #6B7164;
+      --text-muted: #A39E95;
+      --border: #D6CFC5;
+      --accent-tint: rgba(45, 125, 107, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2 {
+      font-family: 'Noto Serif TC', serif;
+      line-height: 1.3;
+    }
+
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { color: var(--accent-dark); }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Icons ── */
+    .icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand-sep {
+      color: var(--text-muted);
+      margin: 0 8px;
+      font-weight: 400;
+    }
+
+    .brand-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      background: var(--accent-tint);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: white;
+      padding: 14px 36px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 200ms ease-out;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); color: white; }
+    .btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .btn-primary .icon {
+      stroke: white;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ── Sections ── */
+    section {
+      padding: 56px 0;
+    }
+
+    section + section {
+      border-top: 1px solid var(--border);
+    }
+
+    section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    section p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+
+    section p:last-child { margin-bottom: 0; }
+
+    .text-emphasis {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── Benefits ── */
+    .benefits {
+      list-style: none;
+      margin-top: 24px;
+    }
+
+    .benefits li {
+      padding: 20px 0;
+    }
+
+    .benefits li + li {
+      border-top: 1px solid var(--border);
+    }
+
+    .benefits li strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .benefits li span {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Steps ── */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+      margin-top: 24px;
+    }
+
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+    }
+
+    .steps li + li {
+      border-top: 1px solid var(--border);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── FAQ ── */
+    .faq-list { margin-top: 24px; }
+
+    .faq-item { padding: 20px 0; }
+    .faq-item + .faq-item { border-top: 1px solid var(--border); }
+
+    .faq-q {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      padding: 64px 0;
+    }
+
+    .cta h2 { margin-bottom: 12px; }
+    .cta p { color: var(--text-secondary); margin-bottom: 28px; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      font-weight: 400;
+      transition: color 200ms;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero { padding: 56px 0 48px; }
+      section { padding: 40px 0; }
+      .benefits li { padding: 16px 0; }
+    }
+
+    /* ── Animation ── */
+    @media (prefers-reduced-motion: no-preference) {
+      main { animation: fadeIn 0.35s ease-out; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <a href="https://hypercerts.guide" class="brand">
+        台灣超讚指南<span class="brand-sep">·</span><span class="brand-sub">百川計畫</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-eyebrow">百川計畫 Project River</div>
+        <h1>免費幫你的組織<br>做一個好看的網站</h1>
+        <p>你的組織還在做事，但沒有網站讓人認識你們？我們來幫忙。</p>
+      </section>
+
+      <!-- Why -->
+      <section>
+        <h2>為什麼做這件事</h2>
+        <p>台灣有很多小型的 NGO 和公益組織，做著很重要的事——但因為沒有人力、沒有預算，一直沒有一個對外的網站。</p>
+        <p>外界想認識你們，卻找不到地方了解。想支持你們，卻不知道從哪裡開始。</p>
+        <p class="text-emphasis">百川計畫是<a href="https://hypercerts.guide">台灣超讚指南</a>的延伸行動。我們的目標很簡單：幫 100 個公益組織，每個做一個乾淨、好看、好用的網站，完全免費。</p>
+      </section>
+
+      <!-- What You Get -->
+      <section>
+        <h2>你會得到什麼</h2>
+        <ul class="benefits">
+          <li><strong>量身打造的單頁網站</strong><span>包含你的故事、服務內容、影響力、照片集和聯絡方式。不是套模板，是根據你的內容來設計。</span></li>
+          <li><strong>免費的專屬網址</strong><span>你的組織名稱.hypercerts.guide，好記、專業，馬上可以印在名片上。</span></li>
+          <li><strong>永久免費託管</strong><span>不用付主機費，不用擔心到期。我們用 Cloudflare 託管，速度快、穩定。</span></li>
+          <li><strong>隨時可以帶走</strong><span>如果有一天你想搬到自己的主機，整包檔案直接給你，沒有綁定。</span></li>
+        </ul>
+      </section>
+
+      <!-- How -->
+      <section>
+        <h2>怎麼參加</h2>
+        <ol class="steps">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3>確認資格</h3>
+              <p>你是一個正在運作的 NGO、公益組織、社區團體，或是在做對社會有幫助的事。不限規模大小。</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3>填寫表單</h3>
+              <p>告訴我們你是誰、在做什麼、希望網站呈現什麼內容。大概 10 分鐘可以填完。</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3>我們來做</h3>
+              <p>收到資料後，我們會幫你做好網站，過程中會跟你確認內容。你不需要懂任何技術。</p>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3>上線</h3>
+              <p>確認沒問題就直接上線。之後要修改內容，隨時跟我們說。</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- FAQ -->
+      <section>
+        <h2>常見問題</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-q">真的完全免費嗎？</div>
+            <div class="faq-a">是的。架站、設計、網址、主機，全部免費。這是我們回饋社會的方式。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">我完全不懂技術，可以嗎？</div>
+            <div class="faq-a">完全可以。你只需要提供文字內容和照片，技術的部分全部由我們處理。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">網站會長什麼樣子？</div>
+            <div class="faq-a">乾淨的單頁式網站，有你的故事介紹、服務內容、影響力數據、照片集和聯絡方式。風格溫暖、專業，在手機上也很好看。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">上線後可以修改嗎？</div>
+            <div class="faq-a">當然可以。內容要更新、照片要換，隨時跟我們說就好。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">誰在做這件事？</div>
+            <div class="faq-a">百川計畫由台灣超讚指南團隊發起，是一群相信科技應該幫助公益的人。</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">有什麼條件限制嗎？</div>
+            <div class="faq-a">組織需要是正在運作中的。第一波開放給我們直接認識的組織，之後開放申請時，需要有一個已在超讚指南上的組織推薦。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <h2>讓更多人認識你們</h2>
+        <p>填寫表單，我們會盡快跟你聯繫。</p>
+        <a href="#" class="btn-primary">
+          我有興趣，填寫表單
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>百川計畫 · <a href="https://hypercerts.guide">台灣超讚指南</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
