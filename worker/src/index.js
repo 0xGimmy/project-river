@@ -60,7 +60,8 @@ export default {
     }
 
     // Validate required fields
-    const { org_name, contact_name, contact_method, contact_handle, description } = body;
+    const { org_name, contact_name, contact_method, contact_handle, description,
+            mission, existing_materials, tone, reference_sites, extra } = body;
     const validMethods = ['signal', 'telegram', 'line', 'email'];
 
     if (!org_name || !contact_name || !contact_method || !contact_handle || !description) {
@@ -92,7 +93,7 @@ export default {
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
       const rateKey = `rate:${ip}`;
       const count = Number(await env.SUBMISSIONS.get(rateKey)) || 0;
-      if (count >= 3) {
+      if (count >= 10) {
         return json({ ok: false, error: '送出太頻繁，請稍後再試' }, 429, origin);
       }
       await env.SUBMISSIONS.put(rateKey, String(count + 1), { expirationTtl: 3600 });
@@ -100,24 +101,31 @@ export default {
       // Store submission
       const id = `sub:${new Date().toISOString()}:${crypto.randomUUID().slice(0, 6)}`;
       await env.SUBMISSIONS.put(id, JSON.stringify({
-        org_name, contact_name, contact_method, contact_handle, description, code,
-        submitted_at: new Date().toISOString(),
-        ip,
+        org_name, contact_name, contact_method, contact_handle, description,
+        mission: mission || '', existing_materials: existing_materials || '',
+        tone: tone || '', reference_sites: reference_sites || '', extra: extra || '',
+        code, submitted_at: new Date().toISOString(), ip,
       }), { expirationTtl: 86400 * 90 });
     }
 
     // Send Telegram notification
     if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
       const methodLabels = { signal: 'Signal', telegram: 'Telegram', line: 'LINE', email: 'Email' };
-      const text = [
+      const parts = [
         `📬 *新申請*`,
         `*驗證碼：* \`${code}\``,
         `*組織名稱：* ${org_name}`,
         `*聯絡人：* ${contact_name}`,
         `*聯繫方式：* ${methodLabels[contact_method] || contact_method}`,
         `*帳號：* ${contact_handle}`,
-        `*介紹：*\n${description.slice(0, 1000)}`,
-      ].join('\n');
+        `*介紹：*\n${description.slice(0, 500)}`,
+      ];
+      if (mission) parts.push(`*核心使命：* ${mission.slice(0, 300)}`);
+      if (existing_materials) parts.push(`*現有素材：* ${existing_materials.slice(0, 300)}`);
+      if (tone) parts.push(`*希望風格：* ${tone.slice(0, 200)}`);
+      if (reference_sites) parts.push(`*參考網站：* ${reference_sites.slice(0, 300)}`);
+      if (extra) parts.push(`*補充：* ${extra.slice(0, 300)}`);
+      const text = parts.join('\n');
 
       try {
         await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {

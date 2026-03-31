@@ -420,6 +420,18 @@
       margin-top: 1px;
     }
 
+    .form-divider {
+      border-top: 1px solid var(--border);
+      margin: 32px 0 24px;
+    }
+
+    .form-section-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
     .hp { position: absolute; left: -9999px; }
 
     /* ── Footer ── */
@@ -610,6 +622,31 @@
               <label class="form-label" for="description">簡單介紹你們在做什麼</label>
               <textarea class="form-textarea" id="description" name="description" required placeholder="例：我們是一個關注偏鄉教育的 NGO，主要在花蓮地區服務⋯⋯"></textarea>
             </div>
+
+            <div class="form-divider"></div>
+            <p class="form-section-title">以下資訊可以幫助我們更快完成你的網站（選填）</p>
+
+            <div class="form-group">
+              <label class="form-label" for="mission">組織的核心使命 <span class="optional">（選填）</span></label>
+              <textarea class="form-textarea" id="mission" name="mission" placeholder="用一兩句話描述你們最想讓外界知道的事。這會成為網站的主標語。&#10;例：讓每個偏鄉孩子都有平等的教育機會。" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="existing_materials">現有的文字、照片或設計素材 <span class="optional">（選填）</span></label>
+              <textarea class="form-textarea" id="existing_materials" name="existing_materials" placeholder="告訴我們你們手上有什麼可以用的東西。&#10;例：有組織簡介 PDF、活動照片約 20 張、有 logo 但沒有原始檔。" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="tone">希望的風格方向 <span class="optional">（選填）</span></label>
+              <input class="form-input" type="text" id="tone" name="tone" placeholder="例：溫暖親切、專業可信、活潑有朝氣⋯⋯">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reference_sites">喜歡的參考網站 <span class="optional">（選填）</span></label>
+              <textarea class="form-textarea" id="reference_sites" name="reference_sites" placeholder="有沒有你覺得做得很好的網站？貼網址給我們參考。&#10;例：https://example.org — 喜歡它的配色和排版" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="extra">其他想補充的 <span class="optional">（選填）</span></label>
+              <textarea class="form-textarea" id="extra" name="extra" placeholder="任何你覺得我們應該知道的事。" rows="2"></textarea>
+            </div>
+
             <!-- honeypot -->
             <div class="hp" aria-hidden="true">
               <label for="website">Website</label>
