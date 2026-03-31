@@ -604,7 +604,7 @@
             </div>
             <div class="form-note">
               <svg class="icon" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4M12 8h.01"/></svg>
-              <span>收到表單後，會由 <strong>Gimmy</strong> 或<strong>豆泥</strong>透過你選的方式聯繫你，不會有其他人。如果收到可疑訊息，請直接忽略。</span>
+              <span>送出後你會收到一組<strong>驗證碼</strong>。我們聯繫你時會先提供這組驗證碼，請核對一致後再回覆，這是防止冒名聯繫的方式。</span>
             </div>
             <div class="form-group">
               <label class="form-label" for="description">簡單介紹你們在做什麼</label>
@@ -688,7 +688,9 @@
           document.getElementById('form-wrapper').style.display = 'none';
           document.getElementById('form-heading').textContent = '已收到你的表單！';
           document.getElementById('form-desc').textContent = '感謝你的填寫，我們會盡快跟你聯繫。';
-          status.textContent = '如果有任何問題，歡迎寫信到 hi@hypercerts.guide';
+          status.innerHTML = json.code
+            ? '你的驗證碼是 <strong style="font-size:18px;letter-spacing:2px;color:var(--accent)">' + json.code + '</strong><br>我們聯繫你時會先提供這組驗證碼，請核對一致後再回覆。'
+            : '如果有任何問題，歡迎寫信到 hi@hypercerts.guide';
           status.className = 'form-status success';
         } else {
           throw new Error(json.error || '送出失敗');

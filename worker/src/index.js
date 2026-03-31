@@ -79,6 +79,14 @@ export default {
       return json({ ok: false, error: '請輸入有效的電子信箱' }, 400, origin);
     }
 
+    // Generate verification code
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      if (i === 3) code += '-';
+      code += chars[Math.floor(Math.random() * chars.length)];
+    }
+
     // Rate limiting via KV (if bound)
     if (env.SUBMISSIONS) {
       const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
@@ -92,7 +100,7 @@ export default {
       // Store submission
       const id = `sub:${new Date().toISOString()}:${crypto.randomUUID().slice(0, 6)}`;
       await env.SUBMISSIONS.put(id, JSON.stringify({
-        org_name, contact_name, contact_method, contact_handle, description,
+        org_name, contact_name, contact_method, contact_handle, description, code,
         submitted_at: new Date().toISOString(),
         ip,
       }), { expirationTtl: 86400 * 90 });
@@ -103,6 +111,7 @@ export default {
       const methodLabels = { signal: 'Signal', telegram: 'Telegram', line: 'LINE', email: 'Email' };
       const text = [
         `📬 *新申請*`,
+        `*驗證碼：* \`${code}\``,
         `*組織名稱：* ${org_name}`,
         `*聯絡人：* ${contact_name}`,
         `*聯繫方式：* ${methodLabels[contact_method] || contact_method}`,
@@ -125,6 +134,6 @@ export default {
       }
     }
 
-    return json({ ok: true }, 200, origin);
+    return json({ ok: true, code }, 200, origin);
   },
 };
