@@ -54,6 +54,11 @@ export default {
       return json({ ok: true }, 200, origin);
     }
 
+    // JS proof check — bots that don't execute JS won't have this
+    if (!body._proof || typeof body._proof !== 'string' || body._proof.length < 6) {
+      return json({ ok: true }, 200, origin);
+    }
+
     // Validate required fields
     const { org_name, contact_name, email, description, phone } = body;
 

@@ -501,8 +501,8 @@
 
       <!-- CTA / Form -->
       <section class="cta" id="form">
-        <h2>讓更多人認識你們</h2>
-        <p>填寫以下表單，我們會盡快跟你聯繫。</p>
+        <h2 id="form-heading">讓更多人認識你們</h2>
+        <p id="form-desc">填寫以下表單，我們會盡快跟你聯繫。</p>
 
         <div class="form-wrapper" id="form-wrapper">
           <form id="contact-form" novalidate>
@@ -554,6 +554,8 @@
   </footer>
 
   <script>
+    // Bot protection: JS proof token — bots that don't execute JS won't have this
+    var _proof = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     document.getElementById('_ts').value = Date.now();
 
     document.getElementById('contact-form').addEventListener('submit', async function(e) {
@@ -568,6 +570,7 @@
       status.style.display = 'none';
 
       var data = Object.fromEntries(new FormData(form));
+      data._proof = _proof;
 
       try {
         var res = await fetch('https://awesome-hundred-form.gimmychang.workers.dev/submit', {
@@ -579,7 +582,9 @@
 
         if (res.ok && json.ok) {
           document.getElementById('form-wrapper').style.display = 'none';
-          status.textContent = '感謝你的填寫！我們會盡快跟你聯繫。';
+          document.getElementById('form-heading').textContent = '已收到你的表單！';
+          document.getElementById('form-desc').textContent = '感謝你的填寫，我們會盡快跟你聯繫。';
+          status.textContent = '如果有任何問題，歡迎寫信到 hi@hypercerts.guide';
           status.className = 'form-status success';
         } else {
           throw new Error(json.error || '送出失敗');
