@@ -1,4 +1,4 @@
-# 百川計畫 / Project River
+# Awesome 100 / 超讚100選
 
 幫 100 個沒網站、沒資源、但還在做事的 NGO/公益組織免費做 one-pager 網站。
 
@@ -9,8 +9,8 @@
 
 ## 架構決策
 
-- **本 repo（project_river）**= 宣傳頁 + 模板 + 產生工具 + manifest.json，部署到 `river.hypercerts.guide`
-- **每個 NGO = 獨立 repo（`river-<slug>`）**，各自部署到 `<slug>.hypercerts.guide`
+- **本 repo（project_river → 內部代號 awesome_hundred）**= 宣傳頁 + 模板 + 產生工具 + manifest.json，部署到 `awesome100.hypercerts.guide`
+- **每個 NGO = 獨立 repo（`awesome100-<slug>`）**，各自部署到 `<slug>.hypercerts.guide`
 - **manifest.json** 記錄所有 NGO 狀態，供超讚指南主站讀取
 - **部署：** Cloudflare Pages（免費），每個 repo 各自接
 - **轉移：** 整個 repo 就是完整的靜態網站，直接給 NGO
