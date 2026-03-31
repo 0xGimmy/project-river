@@ -8,6 +8,7 @@
   <meta property="og:title" content="台灣超讚網站100選 — 免費幫公益組織做網站">
   <meta property="og:description" content="幫 100 個沒網站、沒資源、但還在做事的公益組織，免費做一個漂亮的網站。">
   <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
@@ -272,7 +273,7 @@
       line-height: 1.6;
     }
 
-    /* ── CTA ── */
+    /* ── CTA / Form ── */
     .cta {
       text-align: center;
       padding: 64px 0;
@@ -280,6 +281,84 @@
 
     .cta h2 { margin-bottom: 12px; }
     .cta p { color: var(--text-secondary); margin-bottom: 28px; }
+
+    .form-wrapper { text-align: left; margin-top: 36px; }
+
+    .form-group { margin-bottom: 20px; }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-label .optional {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color 200ms;
+      line-height: 1.5;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-footer { text-align: center; margin-top: 32px; }
+
+    .form-footer .btn-primary {
+      border: none;
+      width: 100%;
+      justify-content: center;
+      max-width: 320px;
+    }
+
+    .form-footer .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-status {
+      margin-top: 16px;
+      padding: 14px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .form-status.success {
+      background: var(--accent-tint);
+      color: var(--accent-dark);
+      display: block;
+    }
+
+    .form-status.error {
+      background: rgba(180, 84, 84, 0.1);
+      color: #8B3A3A;
+      display: block;
+    }
+
+    .hp { position: absolute; left: -9999px; }
 
     /* ── Footer ── */
     footer {
@@ -420,14 +499,49 @@
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="cta">
+      <!-- CTA / Form -->
+      <section class="cta" id="form">
         <h2>讓更多人認識你們</h2>
-        <p>填寫表單，我們會盡快跟你聯繫。</p>
-        <a href="#" class="btn-primary">
-          我有興趣，填寫表單
-          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <p>填寫以下表單，我們會盡快跟你聯繫。</p>
+
+        <div class="form-wrapper" id="form-wrapper">
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="org_name">組織名稱</label>
+              <input class="form-input" type="text" id="org_name" name="org_name" required placeholder="例：台灣超讚基金會">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact_name">聯絡人姓名</label>
+              <input class="form-input" type="text" id="contact_name" name="contact_name" required placeholder="你的名字">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">電子信箱</label>
+              <input class="form-input" type="email" id="email" name="email" required placeholder="hello@example.org">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phone">電話 <span class="optional">（選填）</span></label>
+              <input class="form-input" type="tel" id="phone" name="phone" placeholder="0912-345-678">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="description">簡單介紹你們在做什麼</label>
+              <textarea class="form-textarea" id="description" name="description" required placeholder="例：我們是一個關注偏鄉教育的 NGO，主要在花蓮地區服務⋯⋯"></textarea>
+            </div>
+            <!-- honeypot -->
+            <div class="hp" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="_ts" id="_ts">
+            <div class="form-footer">
+              <button type="submit" class="btn-primary" id="submit-btn">
+                送出表單
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-status" id="form-status"></div>
       </section>
 
     </div>
@@ -439,5 +553,44 @@
     </div>
   </footer>
 
+  <script>
+    document.getElementById('_ts').value = Date.now();
+
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submit-btn');
+      var status = document.getElementById('form-status');
+      var form = this;
+
+      btn.disabled = true;
+      btn.textContent = '送出中⋯';
+      status.className = 'form-status';
+      status.style.display = 'none';
+
+      var data = Object.fromEntries(new FormData(form));
+
+      try {
+        var res = await fetch('https://awesome-hundred-form.gimmychang.workers.dev/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        var json = await res.json();
+
+        if (res.ok && json.ok) {
+          document.getElementById('form-wrapper').style.display = 'none';
+          status.textContent = '感謝你的填寫！我們會盡快跟你聯繫。';
+          status.className = 'form-status success';
+        } else {
+          throw new Error(json.error || '送出失敗');
+        }
+      } catch (err) {
+        status.textContent = '送出失敗，請稍後再試。或直接寫信到 hi@hypercerts.guide';
+        status.className = 'form-status error';
+        btn.disabled = false;
+        btn.innerHTML = '送出表單 <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
+    });
+  </script>
 </body>
 </html>

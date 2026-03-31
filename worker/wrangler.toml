@@ -1,0 +1,10 @@
+name = "awesome-hundred-form"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+[[kv_namespaces]]
+binding = "SUBMISSIONS"
+id = "1c25f54c60384027ad93a121dc5a4bd0"
+
+[vars]
+ALLOWED_ORIGIN = "https://awesome100.hypercerts.guide"
