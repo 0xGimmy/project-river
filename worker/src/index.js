@@ -60,17 +60,22 @@ export default {
     }
 
     // Validate required fields
-    const { org_name, contact_name, email, description, phone } = body;
+    const { org_name, contact_name, contact_method, contact_handle, description } = body;
+    const validMethods = ['signal', 'telegram', 'line', 'email'];
 
-    if (!org_name || !contact_name || !email || !description) {
+    if (!org_name || !contact_name || !contact_method || !contact_handle || !description) {
       return json({ ok: false, error: '請填寫所有必填欄位' }, 400, origin);
     }
 
-    if (org_name.length > 200 || contact_name.length > 100 || email.length > 254 || description.length > 2000) {
+    if (!validMethods.includes(contact_method)) {
+      return json({ ok: false, error: '請選擇有效的聯繫方式' }, 400, origin);
+    }
+
+    if (org_name.length > 200 || contact_name.length > 100 || contact_handle.length > 254 || description.length > 2000) {
       return json({ ok: false, error: '欄位內容過長' }, 400, origin);
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (contact_method === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact_handle)) {
       return json({ ok: false, error: '請輸入有效的電子信箱' }, 400, origin);
     }
 
@@ -87,7 +92,7 @@ export default {
       // Store submission
       const id = `sub:${new Date().toISOString()}:${crypto.randomUUID().slice(0, 6)}`;
       await env.SUBMISSIONS.put(id, JSON.stringify({
-        org_name, contact_name, email, phone: phone || '', description,
+        org_name, contact_name, contact_method, contact_handle, description,
         submitted_at: new Date().toISOString(),
         ip,
       }), { expirationTtl: 86400 * 90 });
@@ -95,12 +100,13 @@ export default {
 
     // Send Telegram notification
     if (env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_CHAT_ID) {
+      const methodLabels = { signal: 'Signal', telegram: 'Telegram', line: 'LINE', email: 'Email' };
       const text = [
         `📬 *新申請*`,
         `*組織名稱：* ${org_name}`,
         `*聯絡人：* ${contact_name}`,
-        `*Email：* ${email}`,
-        `*電話：* ${phone || '（未填）'}`,
+        `*聯繫方式：* ${methodLabels[contact_method] || contact_method}`,
+        `*帳號：* ${contact_handle}`,
         `*介紹：*\n${description.slice(0, 1000)}`,
       ].join('\n');
 

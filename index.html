@@ -358,6 +358,68 @@
       display: block;
     }
 
+    .contact-methods {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .method-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 200ms, background 200ms;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .method-option:hover { border-color: var(--accent); }
+
+    .method-option:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-tint);
+    }
+
+    .method-option input[type="radio"] {
+      accent-color: var(--accent);
+      margin: 0;
+    }
+
+    .form-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+
+    .form-note {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: var(--accent-tint);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-top: 4px;
+      margin-bottom: 8px;
+    }
+
+    .form-note .icon {
+      width: 18px;
+      height: 18px;
+      stroke: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
     .hp { position: absolute; left: -9999px; }
 
     /* ── Footer ── */
@@ -515,12 +577,34 @@
               <input class="form-input" type="text" id="contact_name" name="contact_name" required placeholder="你的名字">
             </div>
             <div class="form-group">
-              <label class="form-label" for="email">電子信箱</label>
-              <input class="form-input" type="email" id="email" name="email" required placeholder="hello@example.org">
+              <label class="form-label">偏好的聯繫方式</label>
+              <p class="form-hint">我們偏好 Signal &gt; Telegram &gt; LINE &gt; Email，但會以你方便的為主。</p>
+              <div class="contact-methods">
+                <label class="method-option">
+                  <input type="radio" name="contact_method" value="signal" checked>
+                  <span class="method-label">Signal</span>
+                </label>
+                <label class="method-option">
+                  <input type="radio" name="contact_method" value="telegram">
+                  <span class="method-label">Telegram</span>
+                </label>
+                <label class="method-option">
+                  <input type="radio" name="contact_method" value="line">
+                  <span class="method-label">LINE</span>
+                </label>
+                <label class="method-option">
+                  <input type="radio" name="contact_method" value="email">
+                  <span class="method-label">Email</span>
+                </label>
+              </div>
             </div>
             <div class="form-group">
-              <label class="form-label" for="phone">電話 <span class="optional">（選填）</span></label>
-              <input class="form-input" type="tel" id="phone" name="phone" placeholder="0912-345-678">
+              <label class="form-label" for="contact_handle" id="contact_handle_label">你的 Signal 號碼或用戶名</label>
+              <input class="form-input" type="text" id="contact_handle" name="contact_handle" required placeholder="+886 912 345 678">
+            </div>
+            <div class="form-note">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4M12 8h.01"/></svg>
+              收到表單後，會由 <strong>Gimmy</strong> 或 <strong>豆泥</strong> 透過你選的方式聯繫你，不會有其他人。如果收到可疑訊息，請直接忽略。
             </div>
             <div class="form-group">
               <label class="form-label" for="description">簡單介紹你們在做什麼</label>
@@ -557,6 +641,26 @@
     // Bot protection: JS proof token — bots that don't execute JS won't have this
     var _proof = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
     document.getElementById('_ts').value = Date.now();
+
+    // Dynamic contact method label
+    var methodConfig = {
+      signal:   { label: '你的 Signal 號碼或用戶名', placeholder: '+886 912 345 678', type: 'text' },
+      telegram: { label: '你的 Telegram 用戶名', placeholder: '@yourname', type: 'text' },
+      line:     { label: '你的 LINE ID', placeholder: 'your-line-id', type: 'text' },
+      email:    { label: '你的 Email', placeholder: 'hello@example.org', type: 'email' }
+    };
+
+    document.querySelectorAll('input[name="contact_method"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        var c = methodConfig[this.value];
+        var input = document.getElementById('contact_handle');
+        document.getElementById('contact_handle_label').textContent = c.label;
+        input.placeholder = c.placeholder;
+        input.type = c.type;
+        input.value = '';
+        input.focus();
+      });
+    });
 
     document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
