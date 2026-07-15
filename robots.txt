@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://awesome100.hypercerts.guide/sitemap.xml
