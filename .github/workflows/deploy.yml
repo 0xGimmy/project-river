@@ -10,9 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 只部署公開檔案，內部檔案（CLAUDE.md、_template、worker 等）不上線
+      - name: Stage public files
+        run: |
+          mkdir -p dist
+          cp index.html 404.html robots.txt sitemap.xml favicon.svg og-image.jpg manifest.json dist/
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=awesome-hundred
+          command: pages deploy dist --project-name=awesome-hundred

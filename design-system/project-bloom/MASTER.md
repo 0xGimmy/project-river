@@ -172,3 +172,16 @@
 - [ ] No horizontal scroll on mobile
 - [ ] Chinese text reads naturally, no awkward line breaks
 - [ ] Tone is warm and human, not corporate or techy
+
+---
+
+## SEO Requirements (every org site)
+
+每個 NGO one-pager 上線前必備，直接用 `_template/seo-head.html` 替換 placeholder：
+
+- [ ] `<link rel="canonical">` 指向自己的 `https://<slug>.hypercerts.guide/`
+- [ ] 完整 OG + Twitter meta（og:image 用 1200×630 JPG，<300KB，SVG 不被社群平台支援）
+- [ ] `NonprofitOrganization` JSON-LD（name / url / description / areaServed / sameAs 填 FB、IG）
+- [ ] 獨立的 `robots.txt`（含 Sitemap 行）與 `sitemap.xml`
+- [ ] `404.html` — 沒有它 Cloudflare Pages 會進 SPA 模式，所有路徑回 200 造成 soft-404
+- [ ] 頁尾連回 `https://hypercerts.guide`（母站互鏈）

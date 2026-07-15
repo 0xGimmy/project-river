@@ -1,0 +1,33 @@
+<!--
+  SEO head：每個 NGO one-pager 的 <head> 都要包含這一段。
+  把 {{...}} 換成實際值。另外每個站都要有自己的 robots.txt、sitemap.xml、404.html
+  （沒有 404.html 的話 Cloudflare Pages 會進 SPA 模式，所有路徑回 200 造成 soft-404）。
+-->
+<title>{{ORG_NAME}} — {{TAGLINE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<link rel="canonical" href="https://{{SLUG}}.hypercerts.guide/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ORG_NAME}} — {{TAGLINE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:url" content="https://{{SLUG}}.hypercerts.guide/">
+<meta property="og:site_name" content="{{ORG_NAME}}">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://{{SLUG}}.hypercerts.guide/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ORG_NAME}} — {{TAGLINE}}">
+<meta name="twitter:description" content="{{DESCRIPTION}}">
+<meta name="twitter:image" content="https://{{SLUG}}.hypercerts.guide/og-image.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NonprofitOrganization",
+  "name": "{{ORG_NAME}}",
+  "url": "https://{{SLUG}}.hypercerts.guide/",
+  "description": "{{DESCRIPTION}}",
+  "inLanguage": "zh-TW",
+  "areaServed": "{{AREA_SERVED}}",
+  "sameAs": ["{{FACEBOOK_URL}}", "{{INSTAGRAM_URL}}"]
+}
+</script>
